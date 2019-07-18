@@ -7,12 +7,12 @@ const fetchStream = ({ user, stream }) => {
   const endpoint = `https://datagarrison.com/users/${user}/${stream}/temp/${stream}_live.txt`
 
   return fetch(endpoint)
-    .then(response => {
+    .then(async response => {
       const { status, ok } = response
       if (ok) {
         return {
           endpoint: endpoint,
-          data: response.text()
+          data: await response.text()
         }
       }
       throw new Error(`Request rejected with status ${status}`)

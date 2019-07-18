@@ -1,6 +1,6 @@
 {
   "name": "datagarrison",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "tool for extracting datagarrison format",
   "main": "datagarrison.js",
   "scripts": {
