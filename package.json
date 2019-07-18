@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/reaktor/datagarrison#readme",
   "devDependencies": {
-    "standard": "^12.0.1"
+    "standard": "^13.0.2"
   },
   "dependencies": {
     "isomorphic-unfetch": "^3.0.0"
