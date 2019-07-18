@@ -9,13 +9,17 @@ const fetchStream = ({ user, stream }) => {
   return fetch(endpoint)
     .then(response => {
       const { status, ok } = response
-      if (ok) return response.text()
-
+      if (ok) {
+        return {
+          endpoint: endpoint,
+          data: response.text()
+        }
+      }
       throw new Error(`Request rejected with status ${status}`)
     })
 }
 
-const parse = data => {
+const parse = ({ endpoint: source, data }) => {
   const lines = data.split(`\r\n`)
 
   const name = lines.shift().trim()
@@ -34,9 +38,7 @@ const parse = data => {
       })
   })
 
-  return {
-    name, timezone, header, samples
-  }
+  return { source, name, timezone, header, samples }
 }
 
 module.exports = { get, parse }
