@@ -20,11 +20,15 @@ const fetchStream = ({ user, stream }) => {
 }
 
 const parse = ({ endpoint: source, data }) => {
-  const lines = data.split(`\r\n`)
+  const lines = data.split('\r\n')
 
   const name = lines.shift().trim()
-  // todo: should we include the timezone in the dates?
+
   const timezone = lines.shift().split(':')[1].trim()
+  const direction = timezone.includes('-') ? '-' : '+'
+  const minutes = parseInt(timezone.includes('minutes') ? timezone.match(/\d+/)[0] : '0')
+  const hours = parseInt(minutes / 60)
+
   const header = lines.shift().split('\t')
   header.pop() // extra '\t'
 
@@ -32,7 +36,7 @@ const parse = ({ endpoint: source, data }) => {
     return line
       .split('\t')
       .map((datum, index) => {
-        if (!index) return Date.parse(datum) // first is datetime
+        if (!index) return Date.parse(`${datum} UTC${direction}${hours}`) // first is datetime
         if (!datum) return null
         return parseFloat(datum)
       })
